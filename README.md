@@ -3,18 +3,17 @@
 ## system prerequisites
 - brew install mongo nodejs
 - npm install -g bower
-- cd public && bower install bootstrap angular fontawesome jquery 
-- bower install ng-file-upload ng-table 
-- bower install angular-animate angular-cookies angular-motion angular-strap angular-ui angular-ui-router 
-
 
 ## application installation
 Clone from git repository. Add all dependencies to package.json
 
 1. Clone the repository: `git clone git@github.com:rpetrenko/fluffy`
 2. Install the application: `npm install`
-3. Start the server: `node server.js`
-4. View in browser at `http://localhost:8080`
+3. cd public && bower install bootstrap angular fontawesome jquery 
+4. bower install ng-file-upload ng-table 
+5. bower install angular-animate angular-cookies angular-motion angular-strap angular-ui angular-ui-router 
+6. Start the server: `node server.js`
+7. View in browser at `http://localhost:8080`
 
 
 ## angularjs modules
