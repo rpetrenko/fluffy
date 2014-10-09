@@ -1,0 +1,39 @@
+<div class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header" ng-show="title">
+                <button type="button" class="close" ng-click="$hide()">&times;</button>
+                <h4 class="modal-title" ng-bind-html="title"></h4>
+            </div>
+            <div class="modal-body" ng-show="content">
+                <div class="input-group input-group-lg">
+                    <span class="input-group-addon">Name</span>
+                    <input type="text" ng-model="formData.name" class="form-control" placeholder="Enter character's name">
+                </div>
+                <div class="input-group input-group-lg">
+                    <span class="input-group-addon">Description</span>
+                    <input type="text" ng-model="formData.desc" class="form-control" placeholder="Enter character's description">
+                </div>
+
+
+
+                <!--<input type="text" ng-model="myModelObj"> -->
+                <!--<input type="file" ng-file-select="onFileSelect($files, formData)">-->
+                <!--<input type="file" ng-file-select="onFileSelect($files)" multiple accept="image/*">-->
+                <!--<div class="button" ng-file-select="onFileSelect($files)" data-multiple="true"></div>-->
+                <!--<div ng-file-drop="onFileSelect($files)" ng-file-drag-over-class="optional-css-class-name-or-function"-->
+                     <!--ng-show="dropSupported">drop files here</div>-->
+                <!--<div ng-file-drop-available="dropSupported=true"-->
+                     <!--ng-show="!dropSupported">HTML5 Drop File is not supported!</div>-->
+                <!--<button ng-click="upload.abort()">Cancel Upload</button>-->
+
+
+                <!--<p ng-bind-html="content"></p>-->
+           </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" ng-click="$hide()">Close</button>
+                <button type="button" class="btn btn-primary" ng-click="addCharacter(formData);$hide()">Save</button>
+            </div>
+        </div>
+    </div>
+</div>

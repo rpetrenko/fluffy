@@ -1,0 +1,25 @@
+<div class="text-center">
+    <h1>Characters</h1>
+</div>
+
+<div class="text-left">
+    <!-- CHARACTER LIST -->
+    <div id="character-list" class="row">
+        <div class="col-sm-4 col-sm-offset-4">
+            <div class="" ng-repeat="character in characters">
+                <a class="btn btn-danger" ng-click="deleteCharacter(character._id)" href="#/characters"><i class="icon-trash icon-white"></i>Delete
+                </a>
+
+                    {{ character.name }} {{ character.desc }}
+                    <form method='post' action='upload' enctype="multipart/form-data">
+                        <input type='file' name='fileUploaded'>
+                        <input type='submit'>
+                    </form>
+
+            </div>
+
+            <button type="button" class="btn btn-primary" data-animation="am-fade-and-scale"  ng-click="showModal()">Add new character</button>
+        </div>
+    </div>
+
+</div>

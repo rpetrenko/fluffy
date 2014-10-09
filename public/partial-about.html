@@ -1,0 +1,22 @@
+<div class="text-center">
+    <h1>About me</h1>
+</div>
+
+<div class="row">
+
+    <div class="col-sm-6">
+        <div ui-view="columnOne"></div>
+    </div>
+
+
+    <div class="col-sm-6">
+        <div ui-view="columnTwo"></div>
+    </div>
+
+    <!--file upload works-->
+    <form method='post' action='upload' enctype="multipart/form-data">
+        <input type='file' name='fileUploaded'>
+        <input type='submit'>
+    </form>
+
+</div>
