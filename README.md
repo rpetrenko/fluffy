@@ -1,5 +1,35 @@
 # Installation
 
+## system prerequisites
+- brew install mongo nodejs
+- npm install -g bower
+- cd public && bower install bootstrap angular fontawesome jquery 
+- bower install ng-file-upload ng-table 
+- bower install angular-animate angular-cookies angular-motion angular-strap angular-ui angular-ui-router 
+
+
+## application installation
+Clone from git repository. Add all dependencies to package.json
+
+1. Clone the repository: `git clone git@github.com:rpetrenko/fluffy`
+2. Install the application: `npm install`
+3. Start the server: `node server.js`
+4. View in browser at `http://localhost:8080`
+
+
+## angularjs modules
+- angular-ui
+- bootstrap
+- angular-file-upload
+
+- ng-table
+- restangular
+- ui-router
+- http-auth-interceptor
+- ng-grid
+- angular-strap (removes deps on jquery and bootstrap)
+
+
 ## mongodb notes
 - show dbs
 
@@ -51,24 +81,3 @@
 >db.mycol.remove({'title':'MongoDB Overview'})
 
 
-## application installation
-
-1. Clone the repository: `git clone git@github.com:scotch-io/node-todo`
-2. Install the application: `npm install`
-3. Start the server: `node server.js`
-4. View in browser at `http://localhost:8080`
-
-
-## angularjs modules
-331 angular-ui
-225 bootstrap
-216 angular-file-upload
-
-126 ng-table
-123 restangular
-118 ui-router
-70 http-auth-interceptor
-69 ng-grid
-60 angular-strap (removes deps on jquery and bootstrap)
-
-npm install -g bower

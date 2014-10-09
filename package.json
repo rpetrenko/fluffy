@@ -1,9 +1,9 @@
 {
-  "name"         : "node-todo",
+  "name"         : "fluffy",
   "version"      : "0.0.0",
-  "description"  : "Simple todo application.",
+  "description"  : "Fluffy website",
   "main"         : "server.js",
-  "author"       : "Scotch",
+  "author"       : "rpetrenko",
   "dependencies" : {
     "express"         : "~4.6.1",
     "mongoose"        : "~3.8.13",
