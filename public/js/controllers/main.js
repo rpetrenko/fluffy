@@ -1,4 +1,12 @@
-angular.module('mainModule', ['angularFileUpload', 'ngAnimate', 'mgcrea.ngStrap', 'ngCookies', 'ngTable', 'ui.router'])
+angular.module('mainModule', [
+    'angularFileUpload',
+    'ngAnimate',
+    'mgcrea.ngStrap',
+    'ngCookies',
+    'ngTable',
+    'ui.router',
+    'youtube-embed'
+])
 
     .config(function($modalProvider) {
         angular.extend($modalProvider.defaults, {
@@ -22,6 +30,16 @@ angular.module('mainModule', ['angularFileUpload', 'ngAnimate', 'mgcrea.ngStrap'
             templateUrl: 'partial-about.html'
         })
 
+        .state('videos', {
+            url: '/videos',
+            templateUrl: 'partial-videos.html'
+        })
+
+        .state('drawings', {
+            url: '/drawings',
+            templateUrl: 'partial-drawings.html'
+        })
+
         .state('characters', {
             url: '/characters',
             views: {
@@ -36,9 +54,32 @@ angular.module('mainModule', ['angularFileUpload', 'ngAnimate', 'mgcrea.ngStrap'
 
     })
 
+    // inject characterService, videoService
+    .controller('mainController', ['$scope', '$http', 'Characters', 'Videos', '$modal', '$upload', function($scope, $http, Characters, Videos, $modal, $upload) {
 
-    // inject characterService
-    .controller('mainController', ['$scope', '$http', 'Characters' ,'$modal', '$upload', function($scope, $http, Characters, $modal, $upload) {
+        $scope.addVideo = function(formData) {
+            if (formData.code != undefined && formData.code != "") {
+                console.log("Saving youtube url: [" + formData.code + "]");
+                Videos.create(formData)
+                    .success(function(data) {
+                        $scope.videos = data;
+                        formData.code = undefined;
+                    });
+            }
+        };
+
+        Videos.get()
+            .success(function(data) {
+                $scope.videos = data;
+            });
+
+        $scope.deleteVideo = function(id) {
+            Videos.delete(id)
+                .success(function(data) {
+                    $scope.videos = data;
+                })
+        };
+
 
         // GET =====================================================================
         Characters.get()
@@ -63,9 +104,7 @@ angular.module('mainModule', ['angularFileUpload', 'ngAnimate', 'mgcrea.ngStrap'
                         formData.name = undefined;
                         formData.desc = undefined;
                     });
-
             }
-
         };
 
         // modal for adding new character
@@ -76,10 +115,5 @@ angular.module('mainModule', ['angularFileUpload', 'ngAnimate', 'mgcrea.ngStrap'
         $scope.hideModal = function() {
            myModal.$promise.then(myModal.hide);
         };
-
-//        $scope.modal = {
-//            "title": "Title",
-//            "content": "Hello Modal<br />This is a multiline message!"
-//        };
 
     }]);

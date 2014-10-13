@@ -1,5 +1,6 @@
 //var Todo = require('./models/todo');
 var Character = require('./models/fluffy');
+var Video = require('./models/videos');
 
 // for file upload with express
 // busboy is a node.js module for parsing incoming HTML form data.
@@ -13,7 +14,7 @@ module.exports = function(app) {
     // for file upload
     app.use(busboy());
 
-    // list all characters
+    // Characters related APIs
     app.get('/api/characters', function(req, res) {
         Character.find(function(err, characters) {
             if (err) res.send(err);
@@ -48,9 +49,41 @@ module.exports = function(app) {
                 res.json(characters);
             });
         });
-
     });
 
+    // Videos related APIs
+    // get videos
+    app.get('/api/videos', function(req, res) {
+        Video.find({}, null, {sort: {'code': -1}}, function(err, videos) {
+            if (err) res.send(err);
+            res.json(videos);
+        });
+    });
+    // create video
+    app.post('/api/videos', function(req, res) {
+        Video.create({
+            code : req.body.code
+        }, function(err, todo) {
+            if (err) res.send(err);
+            Video.find(function(err, videos) {
+                if (err)
+                    res.send(err);
+                res.json(videos);
+            });
+        });
+    });
+    // delete video
+    app.delete('/api/videos/:video_id', function(req, res) {
+        Video.remove({
+            _id : req.params.video_id
+        }, function(err, videos) {
+            if (err) res.send(err);
+            Video.find(function(err, videos) {
+                if (err) res.send(err);
+                res.json(videos);
+            })
+        });
+    });
 
     app.post('/upload', function (req, res, next) {
         var fstream;

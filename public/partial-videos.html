@@ -1,0 +1,26 @@
+<div class="text-center">
+    <h1>Videos</h1>
+    <div>
+        You can also watch them on youtube
+    </div>
+    <div>
+        <input type="text" placeholder="Youtube video code" ng-model="formData.code">
+        <button type="button" class="btn btn-primary" ng-click="addVideo(formData)">Add link</button>
+    </div>
+
+    <ul>
+        <li ng-repeat="video in videos">
+            {{ video.code }}
+            <youtube-video  video-id="video.code" player-width="'300px'" player-height="'200px'">
+            </youtube-video>
+            <a class="btn btn-danger" ng-click="deleteVideo(video._id)" href="#/videos">
+                <i class="icon-trash icon-white"></i>Delete
+            </a>
+        </li>
+    </ul>
+
+    <p>
+        <!--ExwEwL2Rr_Y-->
+        <!--0bT0dLc3TPM-->
+    </p>
+</div>

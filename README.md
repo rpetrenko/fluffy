@@ -12,8 +12,9 @@ Clone from git repository. Add all dependencies to package.json
 3. cd public && bower install bootstrap angular fontawesome jquery 
 4. bower install ng-file-upload ng-table 
 5. bower install angular-animate angular-cookies angular-motion angular-strap angular-ui angular-ui-router 
-6. Start the server: `node server.js`
-7. View in browser at `http://localhost:8080`
+6. bower install angular-youtube-mb
+7. Start the server: `node server.js`
+8. View in browser at `http://localhost:8080`
 
 
 ## angularjs modules

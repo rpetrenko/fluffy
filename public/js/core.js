@@ -1,4 +1,5 @@
 angular.module('myApp', [
     'mainModule',
-    'characterService'
+    'characterService',
+    'videoService'
 ]);
