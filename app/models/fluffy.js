@@ -2,9 +2,9 @@ var mongoose = require('mongoose');
 
 var kittySchema = mongoose.Schema({
     name: {type: String, default: ''},
-    file: {type: String},
     desc: {type: String},
-    picture: {type: String}
+    picture: {type: String},
+    created: { type: Date, default: Date.now }
 });
 
 var Character = mongoose.model('Character', kittySchema);

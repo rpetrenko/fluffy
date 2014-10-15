@@ -26,13 +26,10 @@
 
                 <td data-title="'Picture'">
                     <div ng-if="character.picture">
-                        <img src="{{ character.picture }}" style="width:100px;height:80px">
+                        <img src="img/{{ character.picture }}" style="width:100px;height:80px">
                     </div>
                     <div ng-if="!character.picture">
-                        <form method='post' action='upload' enctype="multipart/form-data">
-                            <input type='file' name='fileUploaded'>
-                            <input type='submit'>
-                        </form>
+                        <div class="drop-box" ng-file-drop="uploadPictureUpdateCharacter($files, character)">  Add picture </div>
                     </div>
                 </td>
 

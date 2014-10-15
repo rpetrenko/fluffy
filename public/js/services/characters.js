@@ -12,6 +12,9 @@ angular.module('characterService', [])
             },
             delete : function(id) {
                 return $http.delete('/api/characters/' + id);
+            },
+            update : function(id, characterData) {
+                return $http.put('/api/characters/' + id, characterData);
             }
         }
     }]);

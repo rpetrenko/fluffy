@@ -10,7 +10,6 @@ var methodOverride = require('method-override');
 
 //app.use(express.static(path.join(__dirname, 'public')));
 
-
 // configuration ===============================================================
 mongoose.connect(database.url); 	// connect to mongoDB database on modulus.io
 

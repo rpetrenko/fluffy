@@ -1,4 +1,3 @@
-//var Todo = require('./models/todo');
 var Character = require('./models/fluffy');
 var Video = require('./models/videos');
 
@@ -39,7 +38,8 @@ module.exports = function(app) {
     app.post('/api/characters', function(req, res) {
         Character.create({
             name : req.body.name,
-            desc : req.body.desc
+            desc : req.body.desc,
+            picture : req.body.picture
         }, function(err, todo) {
             if (err) res.send(err);
             // get and return all the todos after you create another
@@ -51,6 +51,28 @@ module.exports = function(app) {
         });
     });
 
+    // update character
+    app.put('/api/characters/:character_id', function(req, res) {
+
+        var query = {
+            _id : req.params.character_id
+        };
+
+        var new_doc = {
+            name: req.body.name,
+            desc: req.body.desc,
+            picture: req.body.picture
+        };
+
+        Character.findOneAndUpdate(query, new_doc, function(err, characters) {
+            if (err) res.send(err);
+            Character.find(function(err, characters) {
+                if (err) res.send(err);
+                res.json(characters);
+            })
+        });
+
+    });
     // Videos related APIs
     // get videos
     app.get('/api/videos', function(req, res) {
@@ -92,7 +114,7 @@ module.exports = function(app) {
             console.log("Uploading: " + filename);
 
             //Path where image will be uploaded
-            fstream = fs.createWriteStream(__dirname + '/img/' + filename);
+            fstream = fs.createWriteStream(__dirname + '/../public/img/' + filename);
             file.pipe(fstream);
             fstream.on('close', function () {
                 console.log("Upload Finished of " + filename);

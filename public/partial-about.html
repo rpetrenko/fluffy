@@ -6,19 +6,18 @@
 </p>
 <div class="row">
 
-    <div class="col-sm-6">
-        <div ui-view="columnOne"></div>
+    <div>
+        <!--<input type="text" ng-model="myModelObj">-->
+        <input type="file" ng-file-select="onFileSelect($files)">
+        <!--<div class="button" ng-file-select="onFileSelect($files)" data-multiple="true"></div>-->
+        <div ng-file-drop="onFileSelect($files)" class="drop-box"
+             ng-show="dropSupported">drop files here</div>
+        <div ng-file-drop-available="dropSupported=true"
+             ng-show="!dropSupported">HTML5 Drop File is not supported!</div>
+        <!--<button ng-click="upload.abort()">Cancel Upload</button>-->
+        <span class="progress" ng-show="progress >= 0">
+		    <div style="width:{{progress}}%">{{progress}}%</div>
+		</span>
     </div>
-
-
-    <div class="col-sm-6">
-        <div ui-view="columnTwo"></div>
-    </div>
-
-    <!--file upload works-->
-    <form method='post' action='upload' enctype="multipart/form-data">
-        <input type='file' name='fileUploaded'>
-        <input type='submit'>
-    </form>
 
 </div>
