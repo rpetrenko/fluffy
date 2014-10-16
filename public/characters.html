@@ -6,10 +6,16 @@
     <!-- CHARACTER LIST -->
     <div id="character-list" class="row">
         <div class="col-sm-4 col-sm-offset-4">
-            <button type="button" class="btn btn-primary" data-animation="am-fade-and-scale"  ng-click="showModal()">Add new character</button>
+
+            <div class="btn-group">
+
+                <button type="button" class="btn btn-primary" data-animation="am-fade-and-scale"  ng-click="showModal()">Add new character</button>
+
+                <input class="btn btn-default" ng-model="query" placeholder="Search">
+            </div>
 
             <table ng-table class="table">
-            <tr class="" ng-repeat="character in characters">
+            <tr class="" ng-repeat="character in characters | filter:query">
                 <td data-title="'Delete'">
                     <a class="btn btn-danger" ng-click="deleteCharacter(character._id)" href="#/characters">
                     <i class="icon-trash icon-white"></i>Delete
