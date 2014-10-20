@@ -55,9 +55,11 @@ angular.module('myApp', [
             })
             .state('login', {
                 url: '/login',
-                controller: function($scope){
-                    $scope.showLogin();
-                }
+                templateUrl: 'partials/login.html',
+                controller: 'LoginCtrl'
+//                controller: function($scope){
+//                    $scope.showLogin();
+//                }
             });
     })
 

@@ -18,7 +18,6 @@ var express  = require('express'),
     config = require('./config/config'),
     passport = require('passport');
 
-var port  	 = process.env.PORT || 8080; 				// set the port
 
 //app.use(express.static(path.join(__dirname, 'public')));
 
@@ -46,16 +45,15 @@ app.use(session({
     })
 }));
 
-// use passport session
+// Use passport session
 app.use(passport.initialize());
 app.use(passport.session());
 
-//routes should be at the last
-//app.use(app.router);
-
-// bootstrap routes ======================================================================
+// Bootstrap routes
 require('./app/routes')(app);
 
-// listen (start app with node server.js) ======================================
-app.listen(port);
-console.log("App listening on port " + port);
+// Start server
+var port = process.env.PORT || 8080;
+app.listen(port, function () {
+    console.log('Express server listening on port %d in %s mode', port, app.get('env'));
+});
