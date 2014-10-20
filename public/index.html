@@ -78,7 +78,9 @@
 
         <!--Footer-->
 		<div class="text-center text-muted">
-			<p>User: {{ currentUser.username }}</p>
+			<div ng-show="currentUser">
+                <p>User: {{ currentUser.username }}</p>
+            </div>
 		</div>
 
 	</div>
