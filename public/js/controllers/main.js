@@ -2,60 +2,29 @@ angular.module('mainModule', [
     'angularFileUpload',
     'ngAnimate',
     'mgcrea.ngStrap',
-    'ngCookies',
     'ngTable',
     'ui.router',
     'youtube-embed'
 ])
-
-    .config(function($modalProvider) {
-        angular.extend($modalProvider.defaults, {
-            html: true
-        });
-    })
-
-    .config(function($stateProvider, $urlRouterProvider) {
-
-    $urlRouterProvider.otherwise('/home');
-
-    $stateProvider
-
-        .state('home', {
-            url: '/home',
-            templateUrl: 'partial-home.html'
-        })
-
-        .state('about', {
-            url: '/about',
-            templateUrl: 'partial-about.html'
-        })
-
-        .state('videos', {
-            url: '/videos',
-            templateUrl: 'partial-videos.html'
-        })
-
-        .state('drawings', {
-            url: '/drawings',
-            templateUrl: 'partial-drawings.html'
-        })
-
-        .state('characters', {
-            url: '/characters',
-            views: {
-                '': { templateUrl: 'characters.html' },
-                'columnOne@about': { template: 'Look I am a column!' },
-                'columnTwo@about': {
-                    templateUrl: 'table-data.html',
-                    controller: ''
-                }
-            }
-        });
-
-    })
-
-    // inject characterService, videoService
-    .controller('mainController', ['$scope', '$http', 'Characters', 'Videos', '$modal', '$upload', function($scope, $http, Characters, Videos, $modal, $upload) {
+    // inject authService, characterService, videoService
+    .controller('mainController', [
+        '$scope',
+        '$http',
+        'Auth',
+        'Characters',
+        'Videos',
+        '$modal',
+        '$upload',
+        '$location',
+        function($scope,
+                 $http,
+                 Auth,
+                 Characters,
+                 Videos,
+                 $modal,
+                 $upload,
+                 $location
+        ) {
 
         $scope.addVideo = function(formData) {
             if (formData.code != undefined && formData.code != "") {
@@ -168,13 +137,84 @@ angular.module('mainModule', [
         };
         //end file upload
 
+        $scope.loginUser = function(user) {
+            var provider = 'password';
+            Auth.login(provider, {
+                    email: user.email,
+                    password: user.password
+                },
+                function(err) {
+                    $scope.errors = {};
+
+                    if (!err) {
+                        $scope.hideLogin();
+                        $location.path('/');
+                    } else {
+                        angular.forEach(err.errors, function(error, field) {
+                            form[field].$setValidity('mongoose', false);
+                            $scope.errors[field] = error.type;
+                        });
+                        $scope.error.other = err.message;
+                    }
+                });
+        };
+
+        $scope.logout = function() {
+            Auth.logout(function(err) {
+                if(!err) {
+                    $location.path('/');
+                }
+            });
+        };
+
+        $scope.register = function(user) {
+            Auth.createUser({
+                    email: user.email,
+                    username: user.username,
+                    password: user.password
+                },
+                function(err) {
+                    $scope.errors = {};
+
+                    if (!err) {
+                        $location.path('/');
+                    } else {
+                        angular.forEach(err.errors, function(error, field) {
+                            form[field].$setValidity('mongoose', false);
+                            $scope.errors[field] = error.type;
+                        });
+                    }
+                }
+            );
+        };
+
         // modal for adding new character
-        var myModal = $modal({scope: $scope, title: 'Adding new character', content: 'Please type the name', template: 'add-new.html', show: false});
+        var myModal = $modal({
+            scope: $scope,
+            title: 'Adding new character',
+            content: 'Please type the name',
+            template: 'modal-add-character.html',
+            show: false
+        });
         $scope.showModal = function() {
            myModal.$promise.then(myModal.show);
         };
-        $scope.hideModal = function() {
-           myModal.$promise.then(myModal.hide);
+//        $scope.hideModal = function() {
+//           myModal.$promise.then(myModal.hide);
+//        };
+
+        // modal for login
+        var modalLogin = $modal({
+            scope: $scope,
+            title: 'Please Login',
+            template: 'modal-login.html',
+            show: false
+        });
+        $scope.showLogin = function() {
+            modalLogin.$promise.then(modalLogin.show);
+        };
+        $scope.hideLogin = function() {
+           myModal.$promise.then(modalLogin.hide);
         };
 
     }]);

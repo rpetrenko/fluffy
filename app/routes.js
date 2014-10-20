@@ -1,5 +1,6 @@
-var Character = require('./models/fluffy');
-var Video = require('./models/videos');
+var Character = require('./models/fluffy'),
+    Video = require('./models/videos'),
+    User = require('./models/user');
 
 // for file upload with express
 // busboy is a node.js module for parsing incoming HTML form data.
@@ -7,11 +8,75 @@ var busboy = require('connect-busboy'); //middleware for form/file upload
 var path = require('path');     //used for file path
 var fs = require('fs-extra');       //File System - for file manipulation
 
-
+// for authentication
+var passport = require('passport'),
+    auth = require('./config/auth');
 
 module.exports = function(app) {
     // for file upload
     app.use(busboy());
+
+//    app.use(passport.initialize());
+
+    var mongoose = require('mongoose'),
+        LocalStrategy = require('passport-local').Strategy,
+        User = mongoose.model('User');
+
+    // Serialize sessions
+    passport.serializeUser(function(user, done) {
+        done(null, user.id);
+    });
+
+    passport.deserializeUser(function(id, done) {
+        User.findOne({ _id: id }, function (err, user) {
+            done(err, user);
+        });
+    });
+
+    // Use local strategy
+    passport.use(new LocalStrategy({
+            usernameField: 'email',
+            passwordField: 'password'
+        },
+        function(email, password, done) {
+            User.findOne({ email: email }, function (err, user) {
+                if (err) {
+                    return done(err);
+                }
+                if (!user) {
+                    return done(null, false, {
+                        'errors': {
+                            'email': { type: 'Email is not registered.' }
+                        }
+                    });
+                }
+                if (!user.authenticate(password)) {
+                    return done(null, false, {
+                        'errors': {
+                            'password': { type: 'Password is incorrect.' }
+                        }
+                    });
+                }
+                return done(null, user);
+            });
+        }
+    ));
+
+    // User Routes
+    var users = require('../public/js/controllers/users');
+    app.post('/auth/users', users.create);
+    app.get('/auth/users/:userId', users.show);
+
+    // Check if username is available
+    // todo: probably should be a query on users
+    app.get('/auth/check_username/:username', users.exists);
+
+    // Session Routes
+    var session = require('../public/js/controllers/session');
+    app.get('/auth/session', auth.ensureAuthenticated, session.session);
+    app.post('/auth/session', session.login);
+    app.delete('/auth/session', session.logout);
+
 
     // Characters related APIs
     app.get('/api/characters', function(req, res) {
@@ -42,7 +107,6 @@ module.exports = function(app) {
             picture : req.body.picture
         }, function(err, todo) {
             if (err) res.send(err);
-            // get and return all the todos after you create another
             Character.find(function(err, characters) {
                 if (err)
                     res.send(err);
@@ -107,6 +171,7 @@ module.exports = function(app) {
         });
     });
 
+    // file upload API
     app.post('/upload', function (req, res, next) {
         var fstream;
         req.pipe(req.busboy);
@@ -123,28 +188,12 @@ module.exports = function(app) {
         });
     });
 
-
-//    app.post('/api/login', function(req, res) {
-//       console.log("inside /api/login");
-//    });
-//
-//    app.post('/api/logout', function(req, res) {
-//        console.log("inside /api/logout");
-//    });
-//
-//    app.post('/api/register', function(req, res) {
-//        console.log("inside /api/register");
-//    });
-
-    app.post('/api/users', function(req, res) {
-        User.find(function(err, users) {
-            if (err) res.send(err);
-            res.json(users);
-        });
-    });
-
     // main app route, the ui routing is handled by angluarjs
 	app.get('*', function(req, res) {
+        if(req.user) {
+            console.log("setting up cookie with user info");
+            res.cookie('user', JSON.stringify(req.user.user_info));
+        }
 		res.sendfile('./public/index.html'); // load the single view file (angular will handle the page changes on the front-end)
 	});
 };
