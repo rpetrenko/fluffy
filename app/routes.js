@@ -87,7 +87,7 @@ module.exports = function(app) {
     });
 
     // delete existing character
-    app.delete('/api/characters/:character_id', function(req, res) {
+    app.delete('/api/characters/:character_id', auth.ensureAuthenticated, function(req, res) {
         Character.remove({
             _id : req.params.character_id
         }, function(err, characters) {
@@ -100,7 +100,7 @@ module.exports = function(app) {
     });
 
     // create character
-    app.post('/api/characters', function(req, res) {
+    app.post('/api/characters', auth.ensureAuthenticated, function(req, res) {
         Character.create({
             name : req.body.name,
             desc : req.body.desc,
@@ -116,7 +116,7 @@ module.exports = function(app) {
     });
 
     // update character
-    app.put('/api/characters/:character_id', function(req, res) {
+    app.put('/api/characters/:character_id', auth.ensureAuthenticated, function(req, res) {
 
         var query = {
             _id : req.params.character_id
@@ -146,7 +146,7 @@ module.exports = function(app) {
         });
     });
     // create video
-    app.post('/api/videos', function(req, res) {
+    app.post('/api/videos', auth.ensureAuthenticated, function(req, res) {
         Video.create({
             code : req.body.code
         }, function(err, todo) {
@@ -159,7 +159,7 @@ module.exports = function(app) {
         });
     });
     // delete video
-    app.delete('/api/videos/:video_id', function(req, res) {
+    app.delete('/api/videos/:video_id', auth.ensureAuthenticated, function(req, res) {
         Video.remove({
             _id : req.params.video_id
         }, function(err, videos) {
@@ -172,7 +172,7 @@ module.exports = function(app) {
     });
 
     // file upload API
-    app.post('/upload', function (req, res, next) {
+    app.post('/upload', auth.ensureAuthenticated, function (req, res, next) {
         var fstream;
         req.pipe(req.busboy);
         req.busboy.on('file', function (fieldname, file, filename) {

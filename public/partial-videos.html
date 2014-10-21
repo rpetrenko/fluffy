@@ -3,7 +3,7 @@
     <div>
         You can also watch them on youtube
     </div>
-    <div>
+    <div ng-show="currentUser">
         <input type="text" placeholder="Youtube video code" ng-model="formData.code">
         <button type="button" class="btn btn-primary" ng-click="addVideo(formData)">Add link</button>
     </div>
@@ -13,7 +13,7 @@
             {{ video.code }}
             <youtube-video  video-id="video.code" player-width="'300px'" player-height="'200px'">
             </youtube-video>
-            <a class="btn btn-danger" ng-click="deleteVideo(video._id)" href="#/videos">
+            <a class="btn btn-danger" ng-show="currentUser" ng-click="deleteVideo(video._id)" href="#/videos">
                 <i class="icon-trash icon-white"></i>Delete
             </a>
         </li>
