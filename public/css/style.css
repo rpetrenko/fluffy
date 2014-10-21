@@ -1,3 +1,7 @@
+.ng-scope {background-color: #d0c7ff; }
+.navbar {background-color: #eae6fc;}
+.jumbotron {background-color: #d0c7ff;}
+
 .modal-backdrop.am-fade {
     opacity: .2;
     transition: opacity .15s linear;
