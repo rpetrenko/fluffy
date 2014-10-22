@@ -43,37 +43,49 @@
 </head>
 <!-- SET THE CONTROLLER -->
 <body ng-controller="mainController">
-	<div class="container">
 
+    <div class="container">
         <nav class="navbar navbar-default" role="navigation">
-            <!--logo part of navigation-->
-            <div class="navbar-header">
-                <a class="navbar-brand" ui-sref="#">Fluffy Rockstar</a>
-            </div>
+            <div bs-collapse class="container-fluid">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                    <button bs-collapse-toggle type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#">
+                        <img alt="Brand" src="favicon.ico">
+                    </a>
+                </div>
 
-            <!--left part of navigation-->
-            <ul class="nav navbar-nav">
-                <li><a ui-sref="home"><i class="fa fa-home"></i> Home</a></li>
-                <li><a ui-sref="characters"><i class="fa fa-flash"></i> Characters <span class="badge">{{characters.length}}</span></a></li>
-                <li><a ui-sref="drawings"><i class="fa fa-picture-o"></i> Drawings</a></li>
-                <li><a ui-sref="videos"><i class="fa fa-film"></i> Videos <span class="badge">{{videos.length}}</span></a></li>
-                <li><a ui-sref="about"><i class="fa fa-envelope-o"></i> Contact</a></li>
-            </ul>
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div bs-collapse-target class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav">
+                        <li><a ui-sref="home"><i class="fa fa-home"> Home</i></a></li>
+                        <li><a ui-sref="characters"><i class="fa fa-flash"> Characters</i></a></li>
+                        <li><a ui-sref="drawings"><i class="fa fa-picture-o"> Drawings</i></a></li>
+                        <li><a ui-sref="videos"><i class="fa fa-film"> Videos</i></a></li>
+                        <li><a ui-sref="about"><i class="fa fa-envelope-o"></i> Contact</a></li>
+                        <li class="dropdown">
+                            <a bs-dropdown="dropdown">More <span class="caret"></span></a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="#">Link One</a></li>
+                                <li class="divider"></li>
+                                <li><a href="#">Link Two</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li ng-hide="currentUser"><a ui-sref="signup"><i class="fa fa-user"></i> Sign Up </a></li>
+                        <li ng-hide="currentUser"><a ui-sref="login"><i class="fa fa-sign-in"></i> Login </a></li>
+                        <li ng-show="currentUser"><a><i class="fa fa-user"></i> {{ currentUser.username }}</a></li>
+                        <li ng-show="currentUser"><a ui-sref="logout"><i class="fa fa-sign-out"></i> Logout </a></li>
+                    </ul>
 
-            <!--right part of navigation-->
-            <div ng-hide="currentUser">
-                <ul class="nav navbar-nav navbar-right">
-                    <li><a ui-sref="signup"><i class="fa fa-user"></i> Sign Up </a></li>
-                    <li><a ui-sref="login"><i class="fa fa-sign-in"></i> Login </a></li>
-                </ul>
-            </div>
-            <div ng-show="currentUser">
-                <ul class="nav navbar-nav navbar-right">
-                    <li><a><i class="fa fa-user"></i> {{ currentUser.username }}</a></li>
-                    <li><a ui-sref="logout"><i class="fa fa-sign-out"></i> Logout </a></li>
-                 </ul>
-            </div>
-
+                </div><!-- /.navbar-collapse -->
+            </div><!-- /.container-fluid -->
         </nav>
 
         <!-- MAIN CONTENT -->
@@ -81,11 +93,10 @@
             <div ui-view></div>
         </div>
 
-        <!--Footer-->
+        <!-- FOOTER -->
 		<div class="text-center text-muted">
-			<div ng-show="currentUser">
-                <p>User: {{ currentUser.username }}</p>
-            </div>
+            <p ng-show="currentUser">User: {{ currentUser.username }}</p>
+            <p>Created by Fluffy Rockstar</p>
 		</div>
 
 	</div>

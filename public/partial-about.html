@@ -1,23 +1,14 @@
 <div class="text-center">
-    <h1>About me</h1>
-</div>
-<p>
-    The description of me is coming up soon. Stay tuned...
-</p>
-<div class="row">
+    <div class="jumbotron">
+        <h2>About me</h2>
+        <p>
+            The description of me is coming up soon. Stay tuned...
+        </p>
+    </div>
 
-    <div>
-        <!--<input type="text" ng-model="myModelObj">-->
-        <input type="file" ng-file-select="onFileSelect($files)">
-        <!--<div class="button" ng-file-select="onFileSelect($files)" data-multiple="true"></div>-->
-        <div ng-file-drop="onFileSelect($files)" class="drop-box"
-             ng-show="dropSupported">drop files here</div>
-        <div ng-file-drop-available="dropSupported=true"
-             ng-show="!dropSupported">HTML5 Drop File is not supported!</div>
-        <!--<button ng-click="upload.abort()">Cancel Upload</button>-->
-        <span class="progress" ng-show="progress >= 0">
-		    <div style="width:{{progress}}%">{{progress}}%</div>
-		</span>
+    <div class="row">
     </div>
 
 </div>
+
+

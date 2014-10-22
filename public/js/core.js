@@ -18,6 +18,12 @@ angular.module('myApp', [
         });
     })
 
+    .config(function($collapseProvider) {
+        angular.extend($collapseProvider.defaults, {
+            startCollapsed: 'true'
+        });
+    })
+
     .config(function($stateProvider, $urlRouterProvider) {
 
         $urlRouterProvider.otherwise('/home');
