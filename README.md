@@ -5,7 +5,7 @@
 - when deleting character, delete it's image from public/img
 - allow edit users
 - create user view for admin role
-- 
+
 
 ## system prerequisites
 ### iOS
